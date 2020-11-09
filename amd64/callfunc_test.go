@@ -1,7 +1,6 @@
 package amd64
 
 import (
-	"runtime"
 	"testing"
 
 	"github.com/nelhage/gojit"
@@ -44,45 +43,11 @@ func TestRecursion(t *testing.T) {
 
 	asm.BuildTo(&jitf)
 
-	jitf(1024)
-}
-
-func TestGCInCallback(t *testing.T) {
-	asm := newAsm(t)
-	defer gojit.Release(asm.Buf)
-
-	gof := func(i int) {
-		runtime.GC()
-	}
-	var jitf func()
-
-	asm.CallFunc(gof)
-	asm.Ret()
-
-	asm.BuildTo(&jitf)
-
-	jitf()
+	jitf(16)
 }
 
 func BenchmarkGoCall(b *testing.B) {
 	asm, _ := NewGoABI(gojit.PageSize)
-	defer asm.Release()
-
-	f := func() {}
-	asm.CallFunc(f)
-	asm.Ret()
-
-	var jit func()
-	asm.BuildTo(&jit)
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		jit()
-	}
-}
-
-func BenchmarkCgoCall(b *testing.B) {
-	asm, _ := New(gojit.PageSize)
 	defer asm.Release()
 
 	f := func() {}

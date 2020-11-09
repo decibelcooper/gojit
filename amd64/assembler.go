@@ -6,8 +6,7 @@ import "github.com/nelhage/gojit"
 type ABI int
 
 const (
-	CgoABI ABI = iota
-	GoABI
+	GoABI ABI = iota
 )
 
 // Assembler implements a simple amd64 assembler. All methods on
@@ -42,8 +41,6 @@ func (a *Assembler) Release() {
 
 func (a *Assembler) BuildTo(out interface{}) {
 	switch a.ABI {
-	case CgoABI:
-		gojit.BuildToCgo(a.Buf, out)
 	case GoABI:
 		gojit.BuildTo(a.Buf, out)
 	default:

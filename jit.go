@@ -4,10 +4,10 @@
 package gojit
 
 import (
-	"github.com/edsrzf/mmap-go"
-	_ "github.com/nelhage/gojit/cgo"
 	"reflect"
 	"unsafe"
+
+	"github.com/edsrzf/mmap-go"
 )
 
 type ABI int
@@ -48,21 +48,6 @@ func Build(b []byte) func() {
 	return *(*func())(unsafe.Pointer(&fn))
 }
 
-// BuildCgo is like Build, but the resulting provided code will be
-// called by way of the cgo runtime. This has the advantage of being
-// much easier and safer to program against (your JIT'd code need only
-// conform to your platform's C ABI), at the cost of significant
-// overhead for each call into your code.
-func BuildCgo(b []byte) func() {
-	dummy := cgocall
-	fn := &struct {
-		trampoline uintptr
-		jitcode    uintptr
-	}{**(**uintptr)(unsafe.Pointer(&dummy)), Addr(b)}
-
-	return *(*func())(unsafe.Pointer(&fn))
-}
-
 // BuildTo converts a byte-slice into an arbitrary-signatured
 // function. The out argument should be a pointer to a variable of
 // `func' type.
@@ -80,11 +65,6 @@ func BuildCgo(b []byte) func() {
 //     0(%rdi)  [ uint8* data  ]
 func BuildTo(b []byte, out interface{}) {
 	buildToInternal(b, out, Build)
-}
-
-// BuildToCgo is as Build, but uses cgo like BuildCGo
-func BuildToCgo(b []byte, out interface{}) {
-	buildToInternal(b, out, BuildCgo)
 }
 
 func buildToInternal(b []byte, out interface{}, build func([]byte) func()) {
@@ -111,4 +91,3 @@ func buildToInternal(b []byte, out interface{}, build func([]byte) func()) {
 }
 
 func jitcall()
-func cgocall()

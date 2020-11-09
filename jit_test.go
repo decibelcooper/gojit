@@ -11,7 +11,7 @@ func TestBuild(t *testing.T) {
 	}
 	defer Release(b)
 	b[0] = 0xc3
-	for _, build := range []func([]byte) func(){Build, BuildCgo} {
+	for _, build := range []func([]byte) func(){Build} {
 		f := build(b)
 		f()
 	}
@@ -35,7 +35,7 @@ func TestBuildTo(t *testing.T) {
 		0xc3,
 	})
 
-	for _, buildTo := range []func([]byte, interface{}){BuildTo, BuildToCgo} {
+	for _, buildTo := range []func([]byte, interface{}){BuildTo} {
 		var f1 func(uintptr) uintptr
 		buildTo(b, &f1)
 
@@ -48,10 +48,6 @@ func TestBuildTo(t *testing.T) {
 
 func BenchmarkEmptyCall(b *testing.B) {
 	benchmarkEmptyCall(b, Build)
-}
-
-func BenchmarkEmptyCgoCall(b *testing.B) {
-	benchmarkEmptyCall(b, BuildCgo)
 }
 
 func benchmarkEmptyCall(b *testing.B, build func([]byte) func()) {
