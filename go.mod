@@ -1,4 +1,4 @@
-module github.com/nelhage/gojit
+module github.com/decibelcooper/gojit
 
 go 1.15
 

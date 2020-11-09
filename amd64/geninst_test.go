@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/nelhage/gojit"
+	"github.com/decibelcooper/gojit"
 )
 
 var mem []byte = make([]byte, 64)

@@ -3,7 +3,7 @@ package amd64
 import (
 	"testing"
 
-	"github.com/nelhage/gojit"
+	"github.com/decibelcooper/gojit"
 )
 
 func TestCallFunc(t *testing.T) {

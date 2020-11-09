@@ -1,7 +1,7 @@
 // Package amd64 implements a simple amd64 assembler.
 package amd64
 
-import "github.com/nelhage/gojit"
+import "github.com/decibelcooper/gojit"
 
 type ABI int
 

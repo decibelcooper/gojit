@@ -2,7 +2,7 @@ package bf
 
 import (
 	"bytes"
-	"github.com/nelhage/gojit/amd64"
+	"github.com/decibelcooper/gojit/amd64"
 	"io"
 	"reflect"
 	"runtime"

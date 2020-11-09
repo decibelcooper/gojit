@@ -8,7 +8,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/nelhage/gojit/bf"
+	"github.com/decibelcooper/gojit/bf"
 )
 
 func main() {
